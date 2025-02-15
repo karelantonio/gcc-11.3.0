@@ -41,14 +41,14 @@ sed -i '1i #include<pthread.h>' ../gcc/cp/module.c || exit 1
 
 # 7. Build
 echo "Building..."
-make all-gcc
-make all-target-libgcc
-make install-gcc
-make install-target-libgcc
+make all-gcc || exit 1
+make all-target-libgcc || exit 1
+make install-gcc || exit 1
+make install-target-libgcc || exit 1
 
 # 8. Copy the result to the releases?
 echo "Compressing..."
-tar czf $NAME-x86_64-musl.tar.gz /opt/$NAME
+tar czf $NAME-x86_64-musl.tar.gz /opt/$NAME || exit 1
 
 # 9999 Done
 echo "Done!"
