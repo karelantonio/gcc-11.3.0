@@ -16,4 +16,4 @@ jobs:
 
                         - name: Build
                           run: sh build.sh
-                          shell: alpine-x86_64.sh {0}
+                          shell: alpine.sh {0}
