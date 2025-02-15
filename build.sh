@@ -31,7 +31,7 @@ echo "Configuring..."
 
 # 6. Apply some patches
 echo "Applying some patches"
-patch ../libiberty/simple-object-mach-o.c < simple-object-mach-o.c.patch || exit 1
+patch ../libiberty/simple-object-mach-o.c < $INITIALDIR/simple-object-mach-o.c.patch || exit 1
 sed -i '1i #include<pthread.h>' ../gcc/jit/jit-playback.c || exit 1
 sed -i '1i #include<pthread.h>' ../gcc/jit/jit-record.c || exit 1
 sed -i '1i #include<pthread.h>' ../gcc/jit/libgccjit.c || exit 1
