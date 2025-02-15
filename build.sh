@@ -8,7 +8,7 @@ cd $(mktemp -d)
 
 # 1. Install the required dependencies
 echo "Installing the dependencies..."
-apk add --no-cache make build-base gcompat binutils musl-dev wget mpc1-dev gmp-dev mpfr-dev > log.txt
+apk add --no-cache patch make build-base gcompat binutils musl-dev wget mpc1-dev gmp-dev mpfr-dev gcc g++ > log.txt
 
 # 2. Download the file
 echo "Downloading the file"
@@ -27,13 +27,28 @@ echo "Installing requirements"
 
 # 5. Configure
 echo "Configuring..."
-../configure --enable-languages=c,c++ --prefix=/opt/$NAME --disable-multilib # Useful to see the output
+../configure --enable-languages=c,c++ --prefix=/opt/$NAME --disable-multilib || exit 1
 
 # 6. Apply some patches
+echo "Applying some patches"
+patch ../libiberty/simple-object-mach-o.c < simple-object-mach-o.c.patch || exit 1
+sed -i '1i #include<pthread.h>' ../gcc/jit/jit-playback.c || exit 1
+sed -i '1i #include<pthread.h>' ../gcc/jit/jit-record.c || exit 1
+sed -i '1i #include<pthread.h>' ../gcc/jit/libgccjit.c || exit 1
+sed -i '1i #include<pthread.h>' ../gcc/cp/mapper-client.c || exit 1
+sed -i '1i #include<pthread.h>' ../gcc/cp/mapper-resolver.c || exit 1
+sed -i '1i #include<pthread.h>' ../gcc/cp/module.c || exit 1
 
 # 7. Build
+echo "Building..."
+make all-gcc
+make all-target-libgcc
+make install-gcc
+make install-target-libgcc
 
 # 8. Copy the result to the releases?
+echo "Compressing..."
+tar czf $NAME-x86_64-musl.tar.gz /opt/$NAME
 
 # 9999 Done
 echo "Done!"
