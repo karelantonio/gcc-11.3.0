@@ -1,0 +1,19 @@
+name: Build GCC on alpine linux
+
+on: [push]
+
+jobs:
+        build:
+                runs-on: ubuntu-latest
+                steps:
+                        - name: Checkout
+                          uses: actions/checkout@v2
+
+                        - name: Use Setup-Alpine
+                          uses: jirutka/setup-alpine@v1
+                          with:
+                                  branch: v3.15
+
+                        - name: Build
+                          run: sh build.sh
+                          shell: alpine-x86_64.sh {0}
