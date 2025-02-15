@@ -48,7 +48,8 @@ make install-target-libgcc || exit 1
 
 # 8. Copy the result to the releases?
 echo "Compressing..."
-tar czf $NAME-x86_64-musl.tar.gz /opt/$NAME || exit 1
+tar czf $NAME-x86_64-linux-musl.tar.gz /opt/$NAME || exit 1
+mv $NAME-x86_64-linux-musl.tar.gz /
 
 # 9999 Done
 echo "Done!"

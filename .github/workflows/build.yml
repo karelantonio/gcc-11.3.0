@@ -17,3 +17,14 @@ jobs:
                         - name: Build
                           run: sh build.sh
                           shell: alpine.sh --root {0}
+
+                        - name: Upload binaries
+                          uses: svenstaro/upload-release-action@v2
+                          with:
+                                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                                  asset_name: gcc-11.3.0-x86_64-linux-musl.tar.gz
+                                  file: gcc-11.3.0-x86_64-linux-musl.tar.gz
+                                  tag: ${{ github.ref }}
+                                  overwrite: true
+                                  body: "GCC 11.3.0 from source (musl, linux, x86-64)"
+
