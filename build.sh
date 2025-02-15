@@ -12,7 +12,7 @@ apk add --no-cache patch make build-base gcompat binutils musl-dev wget mpc1-dev
 
 # 2. Download the file
 echo "Downloading the file"
-wget https://ftp.gnu.org/gnu/gcc/$NAME/$NAME.tar.gz >> log.txt
+wget -q https://ftp.gnu.org/gnu/gcc/$NAME/$NAME.tar.gz >> log.txt
 
 # 3. Decompress
 echo "Decompressing..."
