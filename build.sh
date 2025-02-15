@@ -12,7 +12,7 @@ apk add --no-cache patch make build-base gcompat binutils musl-dev wget mpc1-dev
 
 # 2. Download the file
 echo "Downloading the file"
-wget https://ftp.gnu.org/gnu/gcc/$NAME/$NAME.tar.gz >> log.txt
+wget -q https://ftp.gnu.org/gnu/gcc/$NAME/$NAME.tar.gz >> log.txt
 
 # 3. Decompress
 echo "Decompressing..."
@@ -33,11 +33,11 @@ echo "Configuring..."
 echo "Applying some patches"
 patch ../libiberty/simple-object-mach-o.c < $INITIALDIR/simple-object-mach-o.c.patch || exit 1
 sed -i '1i #include<pthread.h>' ../gcc/jit/jit-playback.c || exit 1
-sed -i '1i #include<pthread.h>' ../gcc/jit/jit-record.c || exit 1
+sed -i '1i #include<pthread.h>' ../gcc/jit/jit-recording.c || exit 1
 sed -i '1i #include<pthread.h>' ../gcc/jit/libgccjit.c || exit 1
-sed -i '1i #include<pthread.h>' ../gcc/cp/mapper-client.c || exit 1
-sed -i '1i #include<pthread.h>' ../gcc/cp/mapper-resolver.c || exit 1
-sed -i '1i #include<pthread.h>' ../gcc/cp/module.c || exit 1
+sed -i '1i #include<pthread.h>' ../gcc/cp/mapper-client.cc || exit 1
+sed -i '1i #include<pthread.h>' ../gcc/cp/mapper-resolver.cc || exit 1
+sed -i '1i #include<pthread.h>' ../gcc/cp/module.cc || exit 1
 
 # 7. Build
 echo "Building..."
