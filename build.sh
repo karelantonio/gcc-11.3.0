@@ -3,7 +3,7 @@
 # Some things before start
 NAME="gcc-11.3.0"
 INITIALDIR=$PWD
-mkdir -p /opt/$NAME
+mkdir -p /$NAME
 cd $(mktemp -d)
 
 # 1. Install the required dependencies
@@ -27,7 +27,7 @@ echo "Installing requirements"
 
 # 5. Configure
 echo "Configuring..."
-../configure --enable-languages=c,c++ --prefix=/opt/$NAME --disable-multilib || exit 1
+../configure --enable-languages=c,c++ --prefix=/$NAME --disable-multilib || exit 1
 
 # 6. Apply some patches
 echo "Applying some patches"
@@ -48,8 +48,11 @@ make install-target-libgcc || exit 1
 
 # 8. Copy the result to the releases?
 echo "Compressing..."
-tar czf $NAME-x86_64-linux-musl.tar.gz /opt/$NAME || exit 1
-mv $NAME-x86_64-linux-musl.tar.gz /
+tar czf $NAME-x86_64-linux-musl.tar.gz /$NAME || exit 1
+mv $NAME-x86_64-linux-musl.tar.gz $INITIALDIR
+
+# Debug stuff
+pwd && echo $INITIALDIR && ls -la && ls -la $INITIALDIR && ls -la /$NAME || exit 1
 
 # 9999 Done
 echo "Done!"
